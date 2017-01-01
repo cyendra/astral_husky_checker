@@ -18,12 +18,12 @@ def p_empty(p):
     pass
 
 def p_table_name(p):
-    'table_name : ID'
+    '''table_name : ID'''
     p[0] = Node("table_name", p[1])
 
 def p_table_col_list(p):
     '''table_col_list : table_col_term
-               | table_col_list COMMA table_col_term'''
+                      | table_col_list COMMA table_col_term'''
     node = Node("table_col_list")
     for i in range(1, len(p)):
         node.add(p[i])
@@ -51,7 +51,7 @@ def p_table_partitioned(p):
 
 def p_table_lifecycle(p):
     '''table_lifecycle : empty
-                | LIFECYCLE NUMBER'''
+                       | LIFECYCLE NUMBER'''
     node = Node("table_lifecycle")
     for i in range(1, len(p)):
         node.add(p[i])
@@ -59,7 +59,7 @@ def p_table_lifecycle(p):
 
 def p_if_not_exists(p):
     '''if_not_exists : empty 
-              | IF NOT EXISTS'''
+                     | IF NOT EXISTS'''
     node = Node("if_not_exists")
     for i in range(1, len(p)):
         node.add(p[i])
