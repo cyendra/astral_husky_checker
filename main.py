@@ -88,7 +88,7 @@ partitioned by (
 )
 lifecycle 88                                         -- 13 
 """
-    tiny = """create table abcd_table (oo bigint, cc string)"""
+    tiny = """create table proj.abcd_table (oo bigint, cc string)"""
 
     node = parser.parser.parse(s)
     gen_data_visitor = gen_data.GenDataVisitor()

@@ -48,7 +48,7 @@ t_DIVIDE  = r'/'
 t_COMMA   = r','
 
 
-literals = [ '(', ')', '{', '}' ]
+literals = [ '(', ')', '{', '}', '.' , ':']
 
 # A regular expression rule with some action code
 def t_NUMBER(t):

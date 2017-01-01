@@ -9,11 +9,15 @@ class GenDataVisitor(ast_visitor.AstVisitor):
             "table_col_list" : self.table_col_list,
             "table_partitioned" : self.table_partitioned,
             "table_lifecycle" : self.table_lifecycle,
-            "if_not_exists" : self.if_not_exists
+            "if_not_exists" : self.if_not_exists,
+            "table_name" : self.table_name
         }
 
     def visit(self, node, *args, **kwargs):
         self.post_order_visit(node, *args, **kwargs)
+
+    def table_name(self, node, *args, **kwargs):
+        node.data = ''.join(node.childs)
 
     def if_not_exists(self, node, *args, **kwargs):
         if len(node.childs) == 3:

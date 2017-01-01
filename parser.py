@@ -18,11 +18,11 @@ def p_empty(p):
     pass
 
 def p_table_name(p):
-    '''table_name : ID'''
+    '''table_name : ID
+                  | ID '.' ID'''
     node = Node("table_name")
     for i in range(1, len(p)):
         node.add(p[i])
-    node.data = node.childs[0]
     p[0] = node
 
 def p_table_col_list(p):

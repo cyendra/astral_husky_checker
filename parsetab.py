@@ -5,9 +5,9 @@ _tabversion = '3.8'
 
 _lr_method = 'LALR'
 
-_lr_signature = '04D449B6154F2D45B743C277F56892F0'
+_lr_signature = 'D32BBCF009E726B9A634842204D46E4A'
     
-_lr_action_items = {'COMMENT':([18,20,],[21,21,]),'LIKE':([8,9,],[11,-3,]),'EXISTS':([10,],[13,]),')':([15,16,20,23,24,25,26,36,],[18,-4,-2,-7,-5,-6,-8,37,]),'(':([8,9,30,],[12,-3,34,]),'CREATE':([0,],[1,]),'NUMBER':([32,],[35,]),'PARTITIONED':([18,22,23,26,],[-2,27,-7,-8,]),'LIFECYCLE':([18,22,23,26,28,29,37,],[-2,-2,-7,-8,32,-9,-10,]),'DATATYPE':([17,],[20,]),'COMMA':([15,16,20,23,24,25,26,36,],[19,-4,-2,-7,-5,-6,-8,19,]),'STR':([21,],[26,]),'NOT':([7,],[10,]),'TABLE':([1,],[4,]),'$end':([2,3,9,14,18,22,23,26,28,29,31,33,35,37,],[0,-1,-3,-16,-2,-2,-7,-8,-2,-9,-15,-11,-12,-10,]),'BY':([27,],[30,]),'ID':([4,5,6,11,12,13,19,34,],[-2,9,-13,9,17,-14,17,17,]),'IF':([4,],[7,]),}
+_lr_action_items = {'COMMENT':([20,22,],[23,23,]),'LIKE':([8,9,19,],[11,-3,-4,]),'EXISTS':([10,],[14,]),')':([16,17,22,25,26,27,28,38,],[20,-5,-2,-8,-6,-7,-9,39,]),'(':([8,9,19,32,],[12,-3,-4,36,]),'CREATE':([0,],[1,]),'LIFECYCLE':([20,24,25,28,30,31,39,],[-2,-2,-8,-9,34,-10,-11,]),'NUMBER':([34,],[37,]),'PARTITIONED':([20,24,25,28,],[-2,29,-8,-9,]),'.':([9,],[13,]),'DATATYPE':([18,],[22,]),'COMMA':([16,17,22,25,26,27,28,38,],[21,-5,-2,-8,-6,-7,-9,21,]),'STR':([23,],[28,]),'NOT':([7,],[10,]),'TABLE':([1,],[4,]),'$end':([2,3,9,15,19,20,24,25,28,30,31,33,35,37,39,],[0,-1,-3,-17,-4,-2,-2,-8,-9,-2,-10,-16,-12,-13,-11,]),'BY':([29,],[32,]),'ID':([4,5,6,11,12,13,14,21,36,],[-2,9,-14,9,18,19,-15,18,18,]),'IF':([4,],[7,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'table_col_list':([12,34,],[15,36,]),'table_partitioned':([22,],[28,]),'start':([0,],[2,]),'if_not_exists':([4,],[5,]),'table_name':([5,11,],[8,14,]),'table_lifecycle':([28,],[31,]),'table_col_term':([12,19,34,],[16,24,16,]),'table_comment':([18,20,],[22,25,]),'table_definition':([0,],[3,]),'empty':([4,18,20,22,28,],[6,23,23,29,33,]),}
+_lr_goto_items = {'table_col_list':([12,36,],[16,38,]),'table_partitioned':([24,],[30,]),'start':([0,],[2,]),'if_not_exists':([4,],[5,]),'table_name':([5,11,],[8,15,]),'table_lifecycle':([30,],[33,]),'table_col_term':([12,21,36,],[17,26,17,]),'table_comment':([20,22,],[24,27,]),'table_definition':([0,],[3,]),'empty':([4,20,22,24,30,],[6,25,25,31,35,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -29,17 +29,18 @@ _lr_productions = [
   ('start -> table_definition','start',1,'p_start','parser.py',13),
   ('empty -> <empty>','empty',0,'p_empty','parser.py',17),
   ('table_name -> ID','table_name',1,'p_table_name','parser.py',21),
-  ('table_col_list -> table_col_term','table_col_list',1,'p_table_col_list','parser.py',29),
-  ('table_col_list -> table_col_list COMMA table_col_term','table_col_list',3,'p_table_col_list','parser.py',30),
-  ('table_col_term -> ID DATATYPE table_comment','table_col_term',3,'p_table_col_term','parser.py',39),
+  ('table_name -> ID . ID','table_name',3,'p_table_name','parser.py',22),
+  ('table_col_list -> table_col_term','table_col_list',1,'p_table_col_list','parser.py',30),
+  ('table_col_list -> table_col_list COMMA table_col_term','table_col_list',3,'p_table_col_list','parser.py',31),
+  ('table_col_term -> ID DATATYPE table_comment','table_col_term',3,'p_table_col_term','parser.py',38),
   ('table_comment -> empty','table_comment',1,'p_table_comment','parser.py',45),
   ('table_comment -> COMMENT STR','table_comment',2,'p_table_comment','parser.py',46),
-  ('table_partitioned -> empty','table_partitioned',1,'p_table_partitioned','parser.py',55),
-  ('table_partitioned -> PARTITIONED BY ( table_col_list )','table_partitioned',5,'p_table_partitioned','parser.py',56),
-  ('table_lifecycle -> empty','table_lifecycle',1,'p_table_lifecycle','parser.py',63),
-  ('table_lifecycle -> LIFECYCLE NUMBER','table_lifecycle',2,'p_table_lifecycle','parser.py',64),
-  ('if_not_exists -> empty','if_not_exists',1,'p_if_not_exists','parser.py',71),
-  ('if_not_exists -> IF NOT EXISTS','if_not_exists',3,'p_if_not_exists','parser.py',72),
-  ('table_definition -> CREATE TABLE if_not_exists table_name ( table_col_list ) table_comment table_partitioned table_lifecycle','table_definition',10,'p_table_definition','parser.py',80),
-  ('table_definition -> CREATE TABLE if_not_exists table_name LIKE table_name','table_definition',6,'p_table_definition','parser.py',81),
+  ('table_partitioned -> empty','table_partitioned',1,'p_table_partitioned','parser.py',53),
+  ('table_partitioned -> PARTITIONED BY ( table_col_list )','table_partitioned',5,'p_table_partitioned','parser.py',54),
+  ('table_lifecycle -> empty','table_lifecycle',1,'p_table_lifecycle','parser.py',61),
+  ('table_lifecycle -> LIFECYCLE NUMBER','table_lifecycle',2,'p_table_lifecycle','parser.py',62),
+  ('if_not_exists -> empty','if_not_exists',1,'p_if_not_exists','parser.py',69),
+  ('if_not_exists -> IF NOT EXISTS','if_not_exists',3,'p_if_not_exists','parser.py',70),
+  ('table_definition -> CREATE TABLE if_not_exists table_name ( table_col_list ) table_comment table_partitioned table_lifecycle','table_definition',10,'p_table_definition','parser.py',78),
+  ('table_definition -> CREATE TABLE if_not_exists table_name LIKE table_name','table_definition',6,'p_table_definition','parser.py',79),
 ]
