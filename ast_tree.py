@@ -10,12 +10,8 @@ class Node(object):
     def add(self, obj):
         self.childs.append(obj)
 
-    def dfs(self, visitor):
-        for child in self.childs:
-            if type(child) is Node:
-                child.dfs(visitor)
-        visitor.visit(self)
-
+    def visit(self, visitor, *args, **kwargs):
+        visitor.visit(self, *args, **kwargs)
 
     def debug(self, idx=0, tab=""):
         print tab, idx, self.type, self.data
