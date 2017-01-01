@@ -1,0 +1,13 @@
+<xml>
+<ref gao="conf.xml"/>
+
+<attr>
+    <name>task_name</name>
+    <value>${app_name}_wow</value>
+</attr>
+
+<attr>
+    <name>para</name>
+    <value>123</value>
+</attr>
+</xml>

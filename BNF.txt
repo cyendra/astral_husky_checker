@@ -1,0 +1,33 @@
+"""
+
+S : table_definition
+
+empty :
+
+table_definition : CREATE TABLE if_not_exists table_name table_col_list table_comment table_partitioned table_lifecycle
+                 | CREATE TABLE if_not_exists table_name LIKE table_name
+
+table_lifecycle : LIFECYCLE NUMBER
+                | empty
+
+table_partitioned : PARTITIONED BY LPAREN table_col_list RPAREN
+
+table_col_list : table_col_list COMMA table_col_term
+               | table_col_term
+
+table_col_term : ID DATATYPE table_comment
+
+table_comment : COMMENT STR
+              | empty
+
+if_not_exists : IF NOT EXISTS
+              | empty
+
+table_name : ID
+
+query_specification : SELECT select_list table_expression
+
+
+table_col_list : table_col_term more_table_col
+more_table_col : COMMA table_col_term table_col_list 
+               | empty
