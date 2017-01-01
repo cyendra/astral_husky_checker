@@ -16,7 +16,7 @@ empty :
 '''table_col_list : table_col_term
                     | table_col_list COMMA table_col_term'''
 
-'''table_col_term : ID ID table_comment'''
+'''table_col_term : ID DATATYPE table_comment'''
 
 '''table_comment : empty
                     | COMMENT STR'''

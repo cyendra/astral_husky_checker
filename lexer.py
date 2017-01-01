@@ -14,6 +14,12 @@ reserved = {
     'AS' : 'AS'
 }
 
+data_types = set([
+    'BIGINT',
+    'DOUBLE',
+    'STRING'
+])
+
 tokens = [
     'COMMA',
     'STR',
@@ -22,12 +28,15 @@ tokens = [
     'PLUS',
     'MINUS',
     'TIMES',
-    'DIVIDE'
+    'DIVIDE',
+    'DATATYPE'
 ] + list(reserved.values())
 
 def t_ID(t):
     r'[a-zA-Z_$][a-zA-Z_0-9${}]*'
     t.type = reserved.get(t.value.upper(), 'ID')    # Check for reserved words
+    if t.value.upper() in data_types:
+        t.type = 'DATATYPE'
     if t.type != 'ID':
         t.value = t.value.upper()
     return t
@@ -69,6 +78,7 @@ def t_STR(t):
     r'\'.*\'|\".*\"'
     # t.value = '\"' + t.value[1:-1] + '\"'
     return t
+
 
 # Build the lexer
 lexer = lex.lex()

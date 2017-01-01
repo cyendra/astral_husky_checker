@@ -19,7 +19,11 @@ def p_empty(p):
 
 def p_table_name(p):
     '''table_name : ID'''
-    p[0] = Node("table_name", p[1])
+    node = Node("table_name")
+    for i in range(1, len(p)):
+        node.add(p[i])
+    node.data = node.childs[0]
+    p[0] = node
 
 def p_table_col_list(p):
     '''table_col_list : table_col_term
@@ -30,7 +34,7 @@ def p_table_col_list(p):
     p[0] = node
 
 def p_table_col_term(p):
-    '''table_col_term : ID ID table_comment'''
+    '''table_col_term : ID DATATYPE table_comment'''
     node = Node("table_col_term")
     for i in range(1, len(p)):
         node.add(p[i])
@@ -39,7 +43,10 @@ def p_table_col_term(p):
 def p_table_comment(p):
     '''table_comment : empty
                      | COMMENT STR'''
-    p[0] = Node("table_comment", p[1])
+    node = Node("table_comment")
+    for i in range(1, len(p)):
+        node.add(p[i])
+    p[0] = node
 
 def p_table_partitioned(p):
     '''table_partitioned : empty
@@ -73,6 +80,9 @@ def p_table_definition(p):
     for i in range(1, len(p)):
         node.add(p[i])
     p[0] = node
+
+
+
 
 
 
