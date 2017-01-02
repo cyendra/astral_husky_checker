@@ -8,8 +8,11 @@ class AstVisitor(object):
         pass
 
     def dispatch(self, node, *args, **kwargs):
-        f = self.func_dict.get(node.type, None)
-        if f is not None:
+        if self.func_dict.has_key(node.type):
+            f = self.func_dict.get(node.type, None)
+            f(node, *args, **kwargs)
+        elif hasattr(self, node.type):
+            f = getattr(self, node.type)
             f(node, *args, **kwargs)
         else:
             self.miss_func(node, *args, **kwargs)

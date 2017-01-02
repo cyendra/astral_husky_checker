@@ -132,7 +132,7 @@ def p_where_stmt(p):
     load_node(p, 'where_stmt')
 
 def p_where_condition(p):
-    '''where_condition : expr_list'''
+    '''where_condition : line_expr'''
     load_node(p, 'where_condition')
 
 def p_group_stmt(p):
