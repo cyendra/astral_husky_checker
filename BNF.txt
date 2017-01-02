@@ -42,10 +42,13 @@ select_expr_list : select_expr
                  | select_expr_list COMMA select_expr
 
 select_expr : line_expr
-            | line_expr AS DATATYPE
+            | line_expr AS ID
 
-table_reference : ID 
-                | ID '.' ID
+'''table_reference : table_name table_other_name
+                    | '(' select_stmt ')' table_other_name'''
+
+'''table_other_name : empty
+                    | ID'''
 
 where_stmt : empty
            | WHERE where_condition
@@ -98,9 +101,28 @@ func_expr : ID '(' expr_list ')'
 
 buildin_expr : cast_expr
 
-symbol_expr : PLUS | MINUS | TIMES | DIVIDE | EQ | NE | GT | GE | LT | LE | AND | OR | NOT
+symbol_expr : PLUS 
+            | MINUS 
+            | TIMES 
+            | DIVIDE 
+            | EQ 
+            | NE 
+            | GT 
+            | GE 
+            | LT 
+            | LE 
+            | AND 
+            | OR 
+            | NOT
 
-simple_expr : symbol_expr | func_expr | buildin_expr | NUMBER | STR | BOOLEAN | ID
+simple_expr : symbol_expr 
+            | func_expr 
+            | buildin_expr 
+            | NUMBER 
+            | STR 
+            | TRUE 
+            | FALSE 
+            | ID
 
 line_expr : factor_expr 
           | line_expr factor_expr

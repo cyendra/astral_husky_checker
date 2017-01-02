@@ -1,0 +1,1 @@
+create table proj.abcd_table (oo bigint, cc string)

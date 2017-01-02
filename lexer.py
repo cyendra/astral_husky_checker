@@ -13,12 +13,22 @@ reserved = {
     'LIKE' : 'LIKE',
     'AS' : 'AS',
     'CAST' : 'CAST',
-    'TRUE' : 'BOOLEAN',
-    'FALSE' : 'BOOLEAN',
+    'TRUE' : 'TRUE',
+    'FALSE' : 'FALSE',
     'AND' : 'AND',
     'OR' : 'OR',
     'ASC' : 'ASC',
-    'DESC' : 'DESC'
+    'DESC' : 'DESC',
+    'SELECT' : 'SELECT',
+    'FROM' : 'FROM',
+    'ALL' : 'ALL',
+    'DISTINCT' : 'DISTINCT',
+    'WHERE' : 'WHERE',
+    'GROUP' : 'GROUP',
+    'ORDER' : 'ORDER',
+    'DISTRIBUTE' : 'DISTRIBUTE',
+    'SORT' : 'SORT',
+    'LIMIT' : 'LIMIT'
 }
 
 data_types = set([
@@ -36,7 +46,13 @@ tokens = [
     'MINUS',
     'TIMES',
     'DIVIDE',
-    'DATATYPE'
+    'DATATYPE',
+    'GE',
+    'LE',
+    'EQ',
+    'NE',
+    'GT',
+    'LT'
 ] + list(reserved.values())
 
 def t_ID(t):
@@ -53,7 +69,6 @@ t_MINUS   = r'-'
 t_TIMES   = r'\*'
 t_DIVIDE  = r'/'
 t_COMMA   = r','
-
 t_GE      = r'>='
 t_LE      = r'<='
 t_EQ      = r'=|=='

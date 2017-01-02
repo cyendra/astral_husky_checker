@@ -1,101 +1,31 @@
+import sys
 import parser
 import ast_visitor_gen_data as gen_data
 import ast_visitor_format as fmt
 
 
-'''
- 0 table_definition None
-   0 CREATE <type 'str'>
-   1 TABLE <type 'str'>
-   2 if_not_exists IF NOT EXISTS
-     0 IF <type 'str'>
-     1 NOT <type 'str'>
-     2 EXISTS <type 'str'>
-   3 table_name test_${conf}_gogo
-     0 test_${conf}_gogo <type 'str'>
-   4 ( <type 'str'>
-   5 table_col_list [('abc', 'BIGINT', None), ('cde', 'BIGINT', "'qqqq'"), ('go', 'DOUBLE', None), ('s', 'STRING', '"bcd"')]
-     0 table_col_list [('abc', 'BIGINT', None), ('cde', 'BIGINT', "'qqqq'"), ('go', 'DOUBLE', None)]
-       0 table_col_list [('abc', 'BIGINT', None), ('cde', 'BIGINT', "'qqqq'")]
-         0 table_col_list [('abc', 'BIGINT', None)]
-           0 table_col_term ('abc', 'BIGINT', None)
-             0 abc <type 'str'>
-             1 BIGINT <type 'str'>
-             2 table_comment None
-               0 None <type 'NoneType'>
-         1 , <type 'str'>
-         2 table_col_term ('cde', 'BIGINT', "'qqqq'")
-           0 cde <type 'str'>
-           1 BIGINT <type 'str'>
-           2 table_comment 'qqqq'
-             0 COMMENT <type 'str'>
-             1 'qqqq' <type 'str'>
-       1 , <type 'str'>
-       2 table_col_term ('go', 'DOUBLE', None)
-         0 go <type 'str'>
-         1 DOUBLE <type 'str'>
-         2 table_comment None
-           0 None <type 'NoneType'>
-     1 , <type 'str'>
-     2 table_col_term ('s', 'STRING', '"bcd"')
-       0 s <type 'str'>
-       1 STRING <type 'str'>
-       2 table_comment "bcd"
-         0 COMMENT <type 'str'>
-         1 "bcd" <type 'str'>
-   6 ) <type 'str'>
-   7 table_comment "table test"
-     0 COMMENT <type 'str'>
-     1 "table test" <type 'str'>
-   8 table_partitioned [('ggg', 'BIGINT', "'qqqqq'"), ('nono', 'STRING', None)]
-     0 PARTITIONED <type 'str'>
-     1 BY <type 'str'>
-     2 ( <type 'str'>
-     3 table_col_list [('ggg', 'BIGINT', "'qqqqq'"), ('nono', 'STRING', None)]
-       0 table_col_list [('ggg', 'BIGINT', "'qqqqq'")]
-         0 table_col_term ('ggg', 'BIGINT', "'qqqqq'")
-           0 ggg <type 'str'>
-           1 BIGINT <type 'str'>
-           2 table_comment 'qqqqq'
-             0 COMMENT <type 'str'>
-             1 'qqqqq' <type 'str'>
-       1 , <type 'str'>
-       2 table_col_term ('nono', 'STRING', None)
-         0 nono <type 'str'>
-         1 STRING <type 'str'>
-         2 table_comment None
-           0 None <type 'NoneType'>
-     4 ) <type 'str'>
-   9 table_lifecycle 88
-     0 LIFECYCLE <type 'str'>
-     1 88 <type 'int'>
-'''
 
+
+
+def load_test_sql(idx):
+    name = 'data/test_{0}.sql'.format(idx)
+    f = open(name)
+    ret = '\n'.join(f.readlines())
+    f.close()
+    return ret
 
 
 if __name__ == "__main__":
-    s = """                                -- 1
-create table if not exists test_${conf}_gogo (      -- 2
-    abc bigint,                                     -- 3
-    cde bigint comment 'qqqq',
-    go double,                                      -- 5
-    s string comment "bcd"
-)
-comment "table test" -- ready go                    -- 8
-partitioned by (
-    ggg bigint comment 'qqqqq',
-    nono string
-)
-lifecycle 88                                         -- 13 
-"""
-    tiny = """create table proj.abcd_table (oo bigint, cc string)"""
-
-    node = parser.parser.parse(s)
-    gen_data_visitor = gen_data.GenDataVisitor()
-    node.visit(gen_data_visitor)
-    node.debug()
-    rs = []
-    fmt_visitor = fmt.FormatVisitor()
-    node.visit(fmt_visitor, result=rs)
-    print rs[0]
+    if sys.argv[1] == 'test':
+        idx = int(sys.argv[2])
+        sql = load_test_sql(idx)
+        node = parser.parser.parse(sql)
+        print node
+        gen_data_visitor = gen_data.GenDataVisitor()
+        node.visit(gen_data_visitor)
+        node.debug()
+        rs = []
+        fmt_visitor = fmt.FormatVisitor()
+        node.visit(fmt_visitor, result=rs)
+        print rs[0]
     
