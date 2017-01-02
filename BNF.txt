@@ -4,6 +4,7 @@ start : table_definition
 
 empty :
 
+---------------------
 
 '''table_definition : CREATE TABLE if_not_exists table_name '(' table_col_list ')' table_comment table_partitioned table_lifecycle
                     | CREATE TABLE if_not_exists table_name LIKE table_name'''
@@ -11,7 +12,8 @@ empty :
 '''if_not_exists : empty 
                     | IF NOT EXISTS'''
 
-'''table_name : ID'''
+'''table_name : ID
+              | ID '.' ID'''
 
 '''table_col_list : table_col_term
                     | table_col_list COMMA table_col_term'''
@@ -27,3 +29,81 @@ empty :
 '''table_lifecycle : empty
                    | LIFECYCLE NUMBER'''
 
+
+----------------------
+
+select_stmt : SELECT all_or_distinct select_expr_list FROM table_reference where_stmt group_stmt order_stmt distribute_stmt limit_stmt
+
+all_or_distinct : empty
+                | ALL 
+                | DISTINCT
+
+select_expr_list : select_expr 
+                 | select_expr_list COMMA select_expr
+
+select_expr : line_expr
+            | line_expr AS DATATYPE
+
+table_reference : ID 
+                | ID '.' ID
+
+where_stmt : empty
+           | WHERE where_condition
+
+where_condition : expr_list
+
+group_stmt : empty
+           | GROUP BY col_list
+
+col_list : col_expr
+         | col_list COMMA col_expr
+
+col_expr : line_expr
+
+order_stmt : empty
+           | ORDER BY order_condition
+
+order_condition : order_expr
+                | order_condition COMMA order_expr
+
+order_expr : line_expr 
+           | line_expr ASC
+           | line_expr DESC
+
+distribute_stmt : empty
+                | DISTRIBUTE BY distribute_condition sort_stmt
+
+distribute_condition : expr_list
+
+sort_stmt : empty
+          | SORT BY sort_condition
+
+sort_condition : expr_list
+
+limit_stmt : empty
+           | LIMIT NUMBER
+
+
+-------------------------------
+
+sign : PLUS | MINUS | empty
+
+expr_list : line_expr 
+          | expr_list COMMA line_expr
+
+cast_expr : CAST '(' ID AS DATATYPE ')'
+
+func_expr : ID '(' expr_list ')'
+          | ID ':' ID '(' expr_list ')'
+
+buildin_expr : cast_expr
+
+symbol_expr : PLUS | MINUS | TIMES | DIVIDE | EQ | NE | GT | GE | LT | LE | AND | OR | NOT
+
+simple_expr : symbol_expr | func_expr | buildin_expr | NUMBER | STR | BOOLEAN | ID
+
+line_expr : factor_expr 
+          | line_expr factor_expr
+
+factor_expr : '(' line_expr ')'
+            | simple_expr

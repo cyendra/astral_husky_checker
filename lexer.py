@@ -11,7 +11,14 @@ reserved = {
     'EXISTS' : 'EXISTS',
     'LIFECYCLE' : 'LIFECYCLE',
     'LIKE' : 'LIKE',
-    'AS' : 'AS'
+    'AS' : 'AS',
+    'CAST' : 'CAST',
+    'TRUE' : 'BOOLEAN',
+    'FALSE' : 'BOOLEAN',
+    'AND' : 'AND',
+    'OR' : 'OR',
+    'ASC' : 'ASC',
+    'DESC' : 'DESC'
 }
 
 data_types = set([
@@ -47,13 +54,25 @@ t_TIMES   = r'\*'
 t_DIVIDE  = r'/'
 t_COMMA   = r','
 
+t_GE      = r'>='
+t_LE      = r'<='
+t_EQ      = r'=|=='
+t_NE      = r'<>|!='
+t_GT      = r'>'
+t_LT      = r'<'
+
+
+
 
 literals = [ '(', ')', '{', '}', '.' , ':']
 
 # A regular expression rule with some action code
 def t_NUMBER(t):
-    r'\d+'
-    t.value = int(t.value)    
+    r'\d+|\d+\.\d+'
+    if t.value.find('.') != -1:
+        t.value = float(t.value)
+    else:
+        t.value = int(t.value)    
     return t
 
 # Define a rule so we can track line numbers

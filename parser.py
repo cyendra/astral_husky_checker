@@ -7,6 +7,18 @@ from lexer import tokens
 
 from ast_tree import Node
 
+def load_node(name):
+    def _deco(func):
+        def _func(self, p):
+            func(self, p)
+            node = Node(name)
+            for i in range(1, len(p)):
+                node.add(p[i])
+            p[0] = node
+        return _func
+    return _deco
+
+
 start = 'start'
 
 def p_start(p):
@@ -82,8 +94,11 @@ def p_table_definition(p):
     p[0] = node
 
 
-
-
+# -------EXPR------------------------
+@load_node("expr_list")
+def p_expr_list(p):
+    '''expr_list : line_expr 
+                 | expr_list COMMA line_expr'''
 
 
 # Error rule for syntax errors
